@@ -25,4 +25,4 @@
   - **K-平均演算法**（K means Clustering）
   - **階層式分群法**（Hierarchical Clustering）
 
-## 簡單線性迴歸（Simple Linear Regression）
+# 簡單線性迴歸
