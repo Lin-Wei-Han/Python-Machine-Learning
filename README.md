@@ -7,7 +7,7 @@
 參考課程：[Machine Learning A-Z™: Python & R in Data Science [2023]](https://www.udemy.com/course/machinelearning/)
 
 - **Regression 迴歸**
-  - [簡單線性迴歸](#-SimpleLinearRegression)
+  - [簡單線性迴歸](#-簡單線性迴歸)
   - **複迴歸**（Multiple Linear Regression）
   - **多項式迴歸**（Polynomial Regression）
   - **支持向量迴歸**（SVR）
@@ -25,4 +25,4 @@
   - **K-平均演算法**（K means Clustering）
   - **階層式分群法**（Hierarchical Clustering）
 
-# 簡單線性迴歸
+# 簡單線性迴歸 （Simple Linear Regression）
