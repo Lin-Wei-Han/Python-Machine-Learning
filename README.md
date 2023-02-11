@@ -7,7 +7,7 @@
 參考課程：[Machine Learning A-Z™: Python & R in Data Science [2023]](https://www.udemy.com/course/machinelearning/)
 
 - **Regression 迴歸**
-  - [簡單線性迴歸](#-簡單線性迴歸)
+  - [簡單線性迴歸](#-簡單線性迴歸-simple-linear-regression)
   - **複迴歸**（Multiple Linear Regression）
   - **多項式迴歸**（Polynomial Regression）
   - **支持向量迴歸**（SVR）
