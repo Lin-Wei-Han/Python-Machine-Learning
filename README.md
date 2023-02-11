@@ -25,28 +25,30 @@
   - K-平均演算法（K means Clustering）
   - 階層式分群法（Hierarchical Clustering）
 
-## 簡單線性迴歸（Simple Linear Regression）
+## Classification
 
-## 複迴歸（Multiple Linear Regression）
+### 簡單線性迴歸（Simple Linear Regression）
 
-# 多項式迴歸（Polynomial Regression）
+### 複迴歸（Multiple Linear Regression）
 
-# 支持向量迴歸（SVR）
+### 多項式迴歸（Polynomial Regression）
 
-# 決策樹迴歸（Decision Tree Regression）
+### 支持向量迴歸（SVR）
 
-# 隨機森林迴歸（Random Forest Regression）
+### 決策樹迴歸（Decision Tree Regression）
 
-# 羅吉斯迴歸（Logistic Regression）
+### 隨機森林迴歸（Random Forest Regression）
 
-# K-近鄰演算法（KNN）
+### 羅吉斯迴歸（Logistic Regression）
 
-# 支援向量機（SVM）
+### K-近鄰演算法（KNN）
 
-# 非線性支援向量機（Kernel SVM）
+### 支援向量機（SVM）
 
-# 樸素貝氏分類器（Native Bayes）
+### 非線性支援向量機（Kernel SVM）
 
-# 決策樹（Decision Tree）
+### 樸素貝氏分類器（Native Bayes）
 
-# 隨機森林（Random Forest）
+### 決策樹（Decision Tree）
+
+### 隨機森林（Random Forest）
