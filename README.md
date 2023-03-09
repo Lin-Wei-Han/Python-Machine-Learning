@@ -25,9 +25,60 @@
   - [K-平均演算法](#K-平均演算法K-means-Clustering)
   - [階層式分群法](#階層式分群法Hierarchical-Clustering)
 
+## 資料前處理
+
+```python
+from sklearn.model_selection import train_test_split
+import numpy as np
+import pandas as pd
+
+# 輸入資料
+dataset = pd.read_csv('data/Salary_Data.csv')
+
+# 定義反應變數、解釋變數
+X = dataset.iloc[:, :-1].values
+Y = dataset.iloc[:, -1].values
+
+# 資料切割
+x_train, x_test, y_train, y_test = train_test_split(
+    X, Y, test_size=1/3, random_state=0)
+```
+
 ## Regression
 
 ### 簡單線性迴歸（Simple Linear Regression）
+
+- 建立模型
+
+```python
+from sklearn.linear_model import LinearRegression
+
+# 訓練模型
+regressor = LinearRegression()
+regressor.fit(x_train, y_train)
+
+# 預測結果
+y_pred = regressor.predict(x_test)
+```
+
+- 模型驗證
+
+```python
+from sklearn.metrics import r2_score
+
+# 以 R squared、MAPE 驗證模型
+def mape(y_true, y_pred):
+    Accuracy = r2_score(y_true, y_pred)*100
+    Mape = np.mean(np.abs((y_true - y_pred) / y_true)) * 100
+    print(" Accuracy of the model is %.2f" % Accuracy)
+    print(" MAPE of the model is %.2f" % Mape)
+
+
+mape(y_test, y_pred)
+
+```
+
+![image](./01_Regression/image/simple%20linear%20regression%20traing%20set.png)
 
 ### 複迴歸（Multiple Linear Regression）
 
