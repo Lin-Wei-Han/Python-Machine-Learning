@@ -29,6 +29,7 @@
 - [模型驗證](#模型驗證)
   - [迴歸模型指標](#迴歸模型指標)
   - [分類模型指標](#分類模型指標)
+  - [ROC 曲線](#ROC曲線)
 
 ## 資料前處理
 
@@ -55,6 +56,16 @@ ct = ColumnTransformer(
     transformers=[('encoder', OneHotEncoder(), [3])], remainder='passthrough')
 X = np.array(ct.fit_transform(X))
 print(X)
+```
+
+- #### 特徵縮放
+
+```python
+from sklearn.preprocessing import StandardScaler
+
+sc = StandardScaler()
+X_train = sc.fit_transform(X_train)
+X_test = sc.transform(X_test)
 ```
 
 - #### 資料切割
@@ -147,45 +158,309 @@ mape(Y, lin_reg_2.predict(poly_reg.fit_transform(X)))
 
 ### 支持向量迴歸（SVR）
 
+- 特徵縮放
+
+```python
+from sklearn.preprocessing import StandardScaler
+
+sc_X = StandardScaler()
+sc_y = StandardScaler()
+X = sc_X.fit_transform(X)
+y = sc_y.fit_transform(y)
+```
+
+- 建立模型
+
+```python
+from sklearn.svm import SVR
+
+# 訓練模型
+regressor = SVR(kernel='rbf')
+regressor.fit(X, y)
+
+# 預測結果
+sc_y.inverse_transform(
+    regressor.predict(X).reshape(-1, 1))
+```
+
+- 模型驗證
+  參照 [迴歸模型指標](#迴歸模型指標)。
+
+![image](./01_Regression/image/SVR%20Training.png)
+
 ### 決策樹迴歸（Decision Tree Regression）
+
+- 建立模型
+
+```python
+from sklearn.tree import DecisionTreeRegressor
+
+# 訓練模型
+regressor = DecisionTreeRegressor(random_state=0)
+regressor.fit(X, y)
+
+# 預測結果
+regressor.predict(X)
+```
+
+- 模型驗證
+  參照 [迴歸模型指標](#迴歸模型指標)。
+
+![image](./01_Regression/image/DT.png)
 
 ### 隨機森林迴歸（Random Forest Regression）
 
-### 羅吉斯迴歸（Logistic Regression）
+- 建立模型
 
-### K-近鄰演算法（KNN）
+```python
+from sklearn.ensemble import RandomForestRegressor
 
-### 支援向量機（SVM）
+# 訓練模型
+regressor = RandomForestRegressor(n_estimators=10, random_state=0)
+regressor.fit(X, y)
 
-### 非線性支援向量機（Kernel SVM）
+# 預測結果
+regressor.predict(X)
+```
 
-### 樸素貝氏分類器（Native Bayes）
+- 模型驗證
+  參照 [迴歸模型指標](#迴歸模型指標)。
 
-### 決策樹（Decision Tree）
-
-### 隨機森林（Random Forest）
+![image](./01_Regression/image/RF.png)
 
 ## Classification
 
 ### 羅吉斯迴歸（Logistic Regression）
 
+- 特徵縮放
+  參考[特徵縮放](#特徵縮放)。
+
+- 建立模型
+
+```python
+from sklearn.linear_model import LogisticRegression
+
+# 訓練模型
+classifier = LogisticRegression(random_state=0)
+classifier.fit(X_train, y_train)
+
+# 預測結果
+y_pred = classifier.predict(X_test)
+```
+
+- 模型驗證
+  參照 [分類模型指標](#分類模型指標)。
+
+![image](./02_Classification/image/Logistic%20Regression%20Traing%20set.png)
+
 ### K-近鄰演算法（KNN）
+
+- 特徵縮放
+  參考[特徵縮放](#特徵縮放)。
+
+- 建立模型
+
+```python
+from sklearn.neighbors import KNeighborsClassifier
+
+# 訓練模型
+classifier = KNeighborsClassifier(n_neighbors=5, metric='minkowski', p=2)
+classifier.fit(X_train, y_train)
+
+# 預測結果
+y_pred = classifier.predict(X_test)
+```
+
+- 模型驗證
+  參照 [分類模型指標](#分類模型指標)。
+
+![image](./02_Classification/image/K-NN%20Training%20set.png)
 
 ### 支援向量機（SVM）
 
+- 特徵縮放
+  參考[特徵縮放](#特徵縮放)。
+
+- 建立模型
+
+```python
+from sklearn.svm import SVC
+
+# 訓練模型
+classifier = SVC(kernel='linear', random_state=0)
+classifier.fit(X_train, y_train)
+
+# 預測結果
+y_pred = classifier.predict(X_test)
+```
+
+- 模型驗證
+  參照 [分類模型指標](#分類模型指標)。
+
+![image](./02_Classification/image/SVM%20Training%20set.png)
+
 ### 非線性支援向量機（Kernel SVM）
+
+- 特徵縮放
+  參考[特徵縮放](#特徵縮放)。
+
+- 建立模型
+
+```python
+from sklearn.svm import SVC
+
+# 訓練模型
+classifier = SVC(kernel='rbf', random_state=0)
+classifier.fit(X_train, y_train)
+
+# 預測結果
+y_pred = classifier.predict(X_test)
+```
+
+- 模型驗證
+  參照 [分類模型指標](#分類模型指標)。
+
+![image](./02_Classification/image/Kernel%20SVM%20Training%20set.png)
 
 ### 樸素貝氏分類器（Native Bayes）
 
+- 特徵縮放
+  參考[特徵縮放](#特徵縮放)。
+
+- 建立模型
+
+```python
+from sklearn.naive_bayes import GaussianNB
+
+# 訓練模型
+classifier = GaussianNB()
+classifier.fit(X_train, y_train)
+
+# 預測結果
+y_pred = classifier.predict(X_test)
+```
+
+- 模型驗證
+  參照 [分類模型指標](#分類模型指標)。
+
+![image](./02_Classification/image/Naive%20Bayes%20Training%20set.png)
+
 ### 決策樹（Decision Tree）
 
+- 特徵縮放
+  參考[特徵縮放](#特徵縮放)。
+
+- 建立模型
+
+```python
+from sklearn.tree import DecisionTreeClassifier
+
+# 訓練模型
+classifier = DecisionTreeClassifier(criterion='entropy', random_state=0)
+classifier.fit(X_train, y_train)
+
+# 預測結果
+y_pred = classifier.predict(X_test)
+```
+
+- 模型驗證
+  參照 [分類模型指標](#分類模型指標)。
+
+![image](./02_Classification/image/Decision%20Tree%20Classification%20Training%20set.png)
+
 ### 隨機森林（Random Forest）
+
+- 特徵縮放
+  參考[特徵縮放](#特徵縮放)。
+
+- 建立模型
+
+```python
+from sklearn.ensemble import RandomForestClassifier
+
+# 訓練模型
+classifier = RandomForestClassifier(
+    n_estimators=10, criterion='entropy', random_state=0)
+classifier.fit(X_train, y_train)
+
+# 預測結果
+y_pred = classifier.predict(X_test)
+```
+
+- 模型驗證
+  參照 [分類模型指標](#分類模型指標)。
+
+![image](./02_Classification/image/Random%20Forest%20Classification%20Training%20set.png)
 
 ## Clurtering
 
 ### K-平均演算法（K means Clustering）
 
+- 決定分群數
+
+以 elbow method 找到合適的分群數
+
+```python
+from sklearn.cluster import KMeans
+import matplotlib.pyplot as plt
+
+wcss = []
+for i in range(1, 11):
+    kmeans = KMeans(n_clusters = i, init = 'k-means++', random_state = 42)
+    kmeans.fit(X)
+    wcss.append(kmeans.inertia_)
+plt.plot(range(1, 11), wcss)
+plt.title('The Elbow Method')
+plt.xlabel('Number of clusters')
+plt.ylabel('WCSS')
+plt.show()
+```
+
+![image](./03_Clustering/image/k%20means%20elbow.png)
+
+- 建立模型
+
+```python
+from sklearn.cluster import KMeans
+
+# 訓練模型
+kmeans = KMeans(n_clusters = 5, init = 'k-means++', random_state = 42)
+y_kmeans = kmeans.fit_predict(X)
+```
+
+![image](./03_Clustering/image/k%20means%20cluster.png)
+
 ### 階層式分群法（Hierarchical Clustering）
+
+- 決定分群數
+
+以樹狀圖決定合適的分群數
+
+```python
+import scipy.cluster.hierarchy as sch
+from sklearn.cluster import AgglomerativeClustering
+import matplotlib.pyplot as plt
+
+dendrogram = sch.dendrogram(sch.linkage(X, method = 'ward'))
+plt.title('Dendrogram')
+plt.xlabel('Customers')
+plt.ylabel('Euclidean distances')
+plt.show()
+```
+
+![image](./03_Clustering/image/Hierarchical%20dendrogram.png)
+
+- 建立模型
+
+```python
+from sklearn.cluster import AgglomerativeClustering
+
+# 訓練模型
+hc = AgglomerativeClustering(n_clusters = 5, affinity = 'euclidean', linkage = 'ward')
+y_hc = hc.fit_predict(X)
+```
+
+![image](./03_Clustering/image/Hierarchical%20cluster.png)
 
 ## 模型驗證
 
@@ -207,3 +482,86 @@ mape(y_test, y_pred)
 ```
 
 - ### 分類模型指標
+
+```python
+from sklearn.metrics import confusion_matrix, accuracy_score, classification_report
+
+# Making the Confusion Matrix / Accuracy / Report
+
+cm = confusion_matrix(y_test, y_pred)
+print(cm)
+print("Accuracy of the model is %.2f" % accuracy_score(y_test, y_pred))
+print(classification_report(y_test, y_pred))
+```
+
+- ### ROC 曲線
+
+計算各模型的 FPR、TPR。
+
+```python
+from sklearn import metrics
+
+# logistic define metrics
+y_pred_logistic_proba = logistic_classifier.predict_proba(X_test)[::, 1]
+logistic_fpr, logistic_tpr, _ = metrics.roc_curve(
+    y_test,  y_pred_logistic_proba)
+logistic_auc = metrics.roc_auc_score(y_test, y_pred_logistic_proba)
+
+# KNN define metrics
+y_pred_knn_proba = knn_classifier.predict_proba(X_test)[::, 1]
+knn_fpr, knn_tpr, _ = metrics.roc_curve(
+    y_test,  y_pred_knn_proba)
+knn_auc = metrics.roc_auc_score(y_test, y_pred_knn_proba)
+
+# SVM define metrics
+y_pred_svm_proba = svm_classifier.predict_proba(X_test)[::, 1]
+svm_fpr, svm_tpr, _ = metrics.roc_curve(
+    y_test,  y_pred_svm_proba)
+svm_auc = metrics.roc_auc_score(y_test, y_pred_svm_proba)
+
+# Kernel SVM define metrics
+y_pred_kernelsvm_proba = kernelsvm_classifier.predict_proba(X_test)[::, 1]
+kernelsvm_fpr, kernelsvm_tpr, _ = metrics.roc_curve(
+    y_test,  y_pred_kernelsvm_proba)
+kernelsvm_auc = metrics.roc_auc_score(y_test, y_pred_kernelsvm_proba)
+
+# NB define metrics
+y_pred_nb_proba = nb_classifier.predict_proba(X_test)[::, 1]
+nb_fpr, nb_tpr, _ = metrics.roc_curve(
+    y_test,  y_pred_nb_proba)
+nb_auc = metrics.roc_auc_score(y_test, y_pred_nb_proba)
+
+# DC define metrics
+y_pred_dc_proba = dc_classifier.predict_proba(X_test)[::, 1]
+dc_fpr, dc_tpr, _ = metrics.roc_curve(
+    y_test,  y_pred_dc_proba)
+dc_auc = metrics.roc_auc_score(y_test, y_pred_dc_proba)
+
+# RF define metrics
+y_pred_rf_proba = rf_classifier.predict_proba(X_test)[::, 1]
+rf_fpr, rf_tpr, _ = metrics.roc_curve(
+    y_test,  y_pred_rf_proba)
+rf_auc = metrics.roc_auc_score(y_test, y_pred_rf_proba)
+```
+
+- 繪製圖形
+
+```python
+import matplotlib.pyplot as plt
+
+plt.plot(logistic_fpr, logistic_tpr,
+         label="Logistic AUC=" + str(round(logistic_auc, 2)))
+plt.plot(knn_fpr, knn_tpr, label="KNN AUC=" + str(round(knn_auc, 2)))
+plt.plot(svm_fpr, svm_tpr, label="SVM AUC=" + str(round(svm_auc, 2)))
+plt.plot(kernelsvm_fpr, kernelsvm_tpr,
+         label="Kernel SVM AUC=" + str(round(kernelsvm_auc, 2)))
+plt.plot(nb_fpr, nb_tpr, label="Naive Bayes AUC=" + str(round(nb_auc, 2)))
+plt.plot(dc_fpr, dc_tpr, label="Decision Tree AUC=" + str(round(dc_auc, 2)))
+plt.plot(rf_fpr, rf_tpr, label="Random Forest AUC=" + str(round(rf_auc, 2)))
+plt.ylabel('True Positive Rate')
+plt.xlabel('False Positive Rate')
+plt.legend(loc=4)
+plt.show()
+```
+
+![image](./image/roc.png)
